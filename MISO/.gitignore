@@ -1,0 +1,14 @@
+# virtual env
+.venv/
+
+# compiled stuff
+__pycache__/
+
+# data
+people_vector/data_raw/
+people_vector/data_clean/*.parquet
+people_vector/data_clean/*.csv
+people_vector/data_clean/*.png
+
+# system
+.DS_Store
