@@ -1,0 +1,16 @@
+body {
+  margin: 0;
+}
+
+#root {
+  padding: 18px;
+}
+
+.logo {
+  height: 2.6em;
+  opacity: 0.9;
+}
+
+.read-the-docs {
+  color: #9aa3b2;
+}
