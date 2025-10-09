@@ -1,51 +1,99 @@
 import { topKSimilar } from "../utils/similarity";
 
+interface JobItem {
+  label: string;
+  vector: number[];
+  relevance?: number;
+  location?: string;
+  keywords?: string[];
+}
+
 export default function DetailPanel({
   items,
   selectedIndex,
 }: {
-  items: { label: string; vector: number[] }[];
+  items: JobItem[];
   selectedIndex: number | null;
 }) {
   if (selectedIndex === null)
-    return <div className="card">Select a point to see details</div>;
+    return (
+      <div className="card detail-empty">
+        <div className="empty-state">
+          <div className="empty-icon">👈</div>
+          <div className="empty-text">Select a job posting</div>
+          <div className="empty-subtext">
+            Click any job to see details and similar positions
+          </div>
+        </div>
+      </div>
+    );
+
   const item = items[selectedIndex];
   const top = topKSimilar(items, selectedIndex, 3);
 
-  return (
-    <div className="card">
-      <header>
-        <h3 style={{ margin: 0 }}>{item.label}</h3>
-        <div style={{ color: "var(--muted)", fontSize: 12 }}>Selected</div>
-      </header>
+  const parts = item.label.split(" - ");
+  const title = parts[0] || item.label;
+  const company = parts[1] || "";
 
-      <div style={{ marginTop: 10 }}>
-        <strong>Vector (first dims)</strong>
-        <pre
-          style={{
-            margin: "6px 0",
-            whiteSpace: "pre-wrap",
-            background: "rgba(255,255,255,0.02)",
-            padding: 8,
-            borderRadius: 6,
-          }}
-        >
-          {JSON.stringify(item.vector.slice(0, 6), null, 2)}
-        </pre>
+  return (
+    <div className="card detail-panel">
+      <div className="detail-header">
+        <div className="detail-title">{title}</div>
+        <div className="detail-company">{company}</div>
+        {item.location && (
+          <div className="detail-location">📍 {item.location}</div>
+        )}
       </div>
 
-      <div>
-        <strong>Top similar</strong>
-        <ul style={{ marginTop: 6 }}>
-          {top.map((t) => (
-            <li key={t.i} style={{ margin: "6px 0" }}>
-              {t.label}{" "}
-              <span style={{ color: "var(--muted)" }}>
-                — {t.score.toFixed(3)}
+      {item.keywords && item.keywords.length > 0 && (
+        <div className="detail-section">
+          <div className="detail-section-title">Detected Keywords</div>
+          <div className="detail-keywords">
+            {item.keywords.map((keyword, i) => (
+              <span key={i} className="detail-keyword-tag">
+                {keyword}
               </span>
-            </li>
-          ))}
-        </ul>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {item.relevance !== undefined && (
+        <div className="detail-section">
+          <div className="detail-section-title">Relevance Score</div>
+          <div className="detail-relevance">
+            <div className="relevance-bar-bg">
+              <div
+                className="relevance-bar-fill"
+                style={{ width: `${Math.round((item.relevance || 0) * 100)}%` }}
+              />
+            </div>
+            <span className="relevance-percent">
+              {Math.round((item.relevance || 0) * 100)}%
+            </span>
+          </div>
+        </div>
+      )}
+
+      <div className="detail-section">
+        <div className="detail-section-title">Similar Positions</div>
+        <div className="similar-jobs">
+          {top.map((t) => {
+            const similarParts = t.label.split(" - ");
+            const similarTitle = similarParts[0] || t.label;
+            const similarCompany = similarParts[1] || "";
+
+            return (
+              <div key={t.i} className="similar-job-item">
+                <div className="similar-job-title">{similarTitle}</div>
+                <div className="similar-job-company">{similarCompany}</div>
+                <div className="similar-job-score">
+                  Match: {Math.round(t.score * 100)}%
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
