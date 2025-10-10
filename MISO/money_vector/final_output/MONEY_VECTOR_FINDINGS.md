@@ -28,4 +28,4 @@ Total entries in detailed dataset: 220
 5. HOOSIER ENERGY RURAL ELECTRIC COOPERATIVE INC: $102,785,519
 
 
-**Report generated:** 2025-10-09 09:59 PM
+**Report generated:** 2025-10-10 12:19 AM
