@@ -1,0 +1,591 @@
+{
+  "people_vector": [
+    {
+      "posted_at": "2025-10-07 11:16:43.850",
+      "job_title": "Supervisory Healthcare Engineer (Deputy)",
+      "company": "Veterans Health Administration",
+      "location": "San Juan, Puerto Rico",
+      "keywords_detected": "doe,energy,epa,utility",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847639300"
+    },
+    {
+      "posted_at": "2025-10-07 10:41:12.603",
+      "job_title": "Special Investigative Services Technician (SIS Technician)",
+      "company": "Justice, Bureau of Prisons/Federal Prison System",
+      "location": "Seatac, Washington",
+      "keywords_detected": "epa",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847631000"
+    },
+    {
+      "posted_at": "2025-10-07 10:08:51.347",
+      "job_title": "Medical Records Technician (Health Information Technician)",
+      "company": "Veterans Health Administration",
+      "location": "Bay Pines, Florida",
+      "keywords_detected": "compliance,regulatory",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847624800"
+    },
+    {
+      "posted_at": "2025-10-07 09:57:23.350",
+      "job_title": "Supervisory Diagnostic Radiologic Technologist - Computed Tomography",
+      "company": "Veterans Health Administration",
+      "location": "Cape Coral, Florida",
+      "keywords_detected": "epa",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847622800"
+    },
+    {
+      "posted_at": "2025-10-07 09:53:39.463",
+      "job_title": "Supervisory Diagnostic Radiologic Technologist - Magnetic Resonance Imaging",
+      "company": "Veterans Health Administration",
+      "location": "Cape Coral, Florida",
+      "keywords_detected": "epa",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847621900"
+    },
+    {
+      "posted_at": "2025-10-07 09:53:26.170",
+      "job_title": "Mechanical Engineer",
+      "company": "U.S. Army Corps of Engineers",
+      "location": "Redstone Arsenal, Alabama",
+      "keywords_detected": "energy,renewable",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847621600"
+    },
+    {
+      "posted_at": "2025-10-07 09:51:12.827",
+      "job_title": "Supervisor DLA Energy Americas West Region",
+      "company": "Defense Logistics Agency",
+      "location": "Seal Beach, California",
+      "keywords_detected": "energy",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847621300"
+    },
+    {
+      "posted_at": "2025-10-07 09:40:10.500",
+      "job_title": "GENERAL MANAGER (EPICENTER)",
+      "company": "Commander, Navy Installations",
+      "location": "Great Lakes, Illinois",
+      "keywords_detected": "epa",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847619100"
+    },
+    {
+      "posted_at": "2025-10-07 09:35:04.253",
+      "job_title": "Facility Program Manager - Sterile Compounding Program Manager (Pharmacy Service)",
+      "company": "Veterans Health Administration",
+      "location": "Iowa City, Iowa",
+      "keywords_detected": "compliance",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847616800"
+    },
+    {
+      "posted_at": "2025-10-07 08:57:33.197",
+      "job_title": "Heavy Mobile Equipment Repairer",
+      "company": "National Cemetery Administration",
+      "location": "Leavenworth, Kansas",
+      "keywords_detected": "epa",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847611800"
+    },
+    {
+      "posted_at": "2025-10-07 08:30:04.600",
+      "job_title": "MEDICAL RECORDS TECHNICIAN (CO",
+      "company": "Veterans Health Administration",
+      "location": "Asheville, North Carolina",
+      "keywords_detected": "doe",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847607400"
+    },
+    {
+      "posted_at": "2025-10-07 08:23:13.797",
+      "job_title": "Laborer",
+      "company": "Veterans Health Administration",
+      "location": "Temple, Texas",
+      "keywords_detected": "epa",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847606600"
+    },
+    {
+      "posted_at": "2025-10-07 00:00:00.000",
+      "job_title": "Diagnostic Radiologic Technologist (Computed Tomography)",
+      "company": "Veterans Health Administration",
+      "location": "Mather AFB, California",
+      "keywords_detected": "doe",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847558600"
+    },
+    {
+      "posted_at": "2025-10-07 00:00:00.000",
+      "job_title": "Senior Program Analyst",
+      "company": "Department of Energy - Agency Wide",
+      "location": "Washington, District of Columbia",
+      "keywords_detected": "energy,epa",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847558200"
+    },
+    {
+      "posted_at": "2025-10-07 00:00:00.000",
+      "job_title": "Healthcare Engineer",
+      "company": "Veterans Health Administration",
+      "location": "Baltimore, Maryland, Perry Point, Maryland",
+      "keywords_detected": "epa",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847564700"
+    },
+    {
+      "posted_at": "2025-10-07 00:00:00.000",
+      "job_title": "Contract Compliance Specialist",
+      "company": "Federal Law Enforcement Training Centers",
+      "location": "Glynco, Georgia",
+      "keywords_detected": "compliance,epa",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847571300"
+    },
+    {
+      "posted_at": "2025-10-07 00:00:00.000",
+      "job_title": "Diagnostic Radiologic Technologist",
+      "company": "Veterans Health Administration",
+      "location": "Mather AFB, California",
+      "keywords_detected": "doe",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847558100"
+    },
+    {
+      "posted_at": "2025-10-07 00:00:00.000",
+      "job_title": "Clinical Laboratory Scientist (Laboratory Information Manager)",
+      "company": "Veterans Health Administration",
+      "location": "Hot Springs, South Dakota",
+      "keywords_detected": "compliance,doe,regulatory",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847589100"
+    },
+    {
+      "posted_at": "2025-10-06 19:37:53.200",
+      "job_title": "Human Resources Specialist",
+      "company": "Department of Energy - Agency Wide",
+      "location": "Golden, Colorado, Washington, District of Columbia, Salt Lake City, Utah, Seattle, Washington, Phoenix, Arizona, Los Angeles, California, San Francisco, California, Denver, Colorado, Washington, District of Columbia, Miami, Florida, Atlanta, Georgia, Chicago, Illinois, Indianapolis, Indiana, New Orleans, Louisiana, Boston, Massachusetts, Minneapolis, Minnesota, Kansas City, Missouri, Albuquerque, New Mexico, New York, New York, Oklahoma City, Oklahoma, Portland, Oregon, Austin, Texas, Albuquerque, New Mexico, Cincinnati, Ohio, Oak Ridge, Tennessee",
+      "keywords_detected": "compliance,energy,epa",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847481700"
+    },
+    {
+      "posted_at": "2025-10-06 18:04:20.337",
+      "job_title": "Electronics Engineer",
+      "company": "Bonneville Power Administration",
+      "location": "Idaho Falls, Idaho, Gold Creek, Montana, Kalispell, Montana, Goshen, Oregon, Keizer, Oregon, Malin, Oregon, Redmond, Oregon, The Dalles, Oregon, Umatilla, Oregon, Clarkston, Washington, East Wenatchee, Washington, Ellensburg, Washington, Grand Coulee, Washington, Kent, Washington, Longview, Washington, Olympia, Washington, Pasco, Washington, Richland, Washington, Snohomish, Washington, Spokane, Washington, Vancouver, Washington",
+      "keywords_detected": "transmission",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847593900"
+    },
+    {
+      "posted_at": "2025-10-06 15:38:17.073",
+      "job_title": "Supervisory Clinical Laboratory Scientist - Specimen Collection/Phlebotomy and Processing",
+      "company": "Veterans Health Administration",
+      "location": "Orlando, Florida",
+      "keywords_detected": "epa",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847577300"
+    },
+    {
+      "posted_at": "2025-10-06 14:49:00.460",
+      "job_title": "2nd Assistant Engineer Pipeline Dredge Class I",
+      "company": "U.S. Army Corps of Engineers",
+      "location": "Saint Louis, Missouri",
+      "keywords_detected": "epa",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847568200"
+    },
+    {
+      "posted_at": "2025-10-06 14:07:11.660",
+      "job_title": "Utility Systems Operator",
+      "company": "Veterans Health Administration",
+      "location": "West Haven, Connecticut",
+      "keywords_detected": "utility",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847559500"
+    },
+    {
+      "posted_at": "2025-10-06 13:30:41.677",
+      "job_title": "Emergency Management Specialist (Recovery)",
+      "company": "Federal Emergency Management Agency",
+      "location": "Atlanta, Georgia",
+      "keywords_detected": "compliance",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847556000"
+    },
+    {
+      "posted_at": "2025-10-06 10:24:41.087",
+      "job_title": "Special Investigative Services Technician (SIS Technician)",
+      "company": "Justice, Bureau of Prisons/Federal Prison System",
+      "location": "Fort Dix, New Jersey",
+      "keywords_detected": "epa",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847526900"
+    },
+    {
+      "posted_at": "2025-10-06 10:01:49.130",
+      "job_title": "Motor Vehicle Operator",
+      "company": "Veterans Health Administration",
+      "location": "Minneapolis, Minnesota",
+      "keywords_detected": "utility",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847522700"
+    },
+    {
+      "posted_at": "2025-10-06 09:35:45.270",
+      "job_title": "Railroad Maintenance Vehicle Operator",
+      "company": "U.S. Army Joint Munitions Command",
+      "location": "McAlester, Oklahoma",
+      "keywords_detected": "epa",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847519600"
+    },
+    {
+      "posted_at": "2025-10-06 09:13:56.057",
+      "job_title": "Lead Contract Specialist",
+      "company": "United States Fleet Forces Command",
+      "location": "Naval Base, Norfolk, Virginia",
+      "keywords_detected": "compliance,epa",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/846659500"
+    },
+    {
+      "posted_at": "2025-10-06 09:06:02.913",
+      "job_title": "Clinical Pharmacy Specialist - Acute Care",
+      "company": "Veterans Health Administration",
+      "location": "Gainesville, Florida",
+      "keywords_detected": "doe",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847515500"
+    },
+    {
+      "posted_at": "2025-10-06 09:01:36.827",
+      "job_title": "Supervisory Healthcare Engineer (Maintenance and Operations)",
+      "company": "Veterans Health Administration",
+      "location": "Bronx, New York",
+      "keywords_detected": "energy,epa,utility",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847514900"
+    },
+    {
+      "posted_at": "2025-10-06 08:25:10.233",
+      "job_title": "Maintenance and Operations General Foreman",
+      "company": "Treasury, Departmental Offices",
+      "location": "Washington, District of Columbia",
+      "keywords_detected": "epa",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847511400"
+    },
+    {
+      "posted_at": "2025-10-06 07:54:06.543",
+      "job_title": "Air Conditioning Equipment Mechanic",
+      "company": "Veterans Health Administration",
+      "location": "Hampton, Virginia",
+      "keywords_detected": "epa",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/846855800"
+    },
+    {
+      "posted_at": "2025-10-06 07:32:07.140",
+      "job_title": "Diagnostic Radiologic Technologist- Ultrasound",
+      "company": "Veterans Health Administration",
+      "location": "Hampton, Virginia",
+      "keywords_detected": "doe",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847508300"
+    },
+    {
+      "posted_at": "2025-10-06 07:28:03.557",
+      "job_title": "Law Enforcement Specialist (General Training Instructor)",
+      "company": "Federal Law Enforcement Training Centers",
+      "location": "Artesia, New Mexico",
+      "keywords_detected": "epa",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847508100"
+    },
+    {
+      "posted_at": "2025-10-06 06:59:26.660",
+      "job_title": "Budget Analyst",
+      "company": "Missile Defense Agency",
+      "location": "Redstone Arsenal, Alabama, Dahlgren, Virginia, Fort Belvoir, Virginia",
+      "keywords_detected": "epa",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847506600"
+    },
+    {
+      "posted_at": "2025-10-06 00:00:00.000",
+      "job_title": "Diagnostic Radiologic Technologist (CT)",
+      "company": "Veterans Health Administration",
+      "location": "Providence, Rhode Island",
+      "keywords_detected": "epa",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847414000"
+    },
+    {
+      "posted_at": "2025-10-06 00:00:00.000",
+      "job_title": "Maintenance Test Pilot",
+      "company": "Customs and Border Protection",
+      "location": "San Diego, California",
+      "keywords_detected": "epa",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847215500"
+    },
+    {
+      "posted_at": "2025-10-06 00:00:00.000",
+      "job_title": "Utility Systems Repairer-Operator",
+      "company": "Veterans Health Administration",
+      "location": "Chillicothe, Ohio",
+      "keywords_detected": "epa,utility",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847445500"
+    },
+    {
+      "posted_at": "2025-10-06 00:00:00.000",
+      "job_title": "Program Assistant (Analysis)",
+      "company": "Veterans Health Administration",
+      "location": "Albuquerque, New Mexico",
+      "keywords_detected": "epa,regulatory",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847468700"
+    },
+    {
+      "posted_at": "2025-10-05 00:00:00.000",
+      "job_title": "Nurse (Administration)",
+      "company": "Military Treatment Facilities under DHA",
+      "location": "Fort Sam Houston, Texas",
+      "keywords_detected": "epa",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847382300"
+    },
+    {
+      "posted_at": "2025-10-04 00:00:00.000",
+      "job_title": "Facility Healthcare Program Manager (O-5 Billet) Non-Supervisory",
+      "company": "Immigration and Customs Enforcement",
+      "location": "Port Isabel, Texas",
+      "keywords_detected": "compliance,epa",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/844774200"
+    },
+    {
+      "posted_at": "2025-10-04 00:00:00.000",
+      "job_title": "Health Services Administrator (O-6 Billet) Supervisory",
+      "company": "Immigration and Customs Enforcement",
+      "location": "Miami, Florida",
+      "keywords_detected": "compliance",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847627600"
+    },
+    {
+      "posted_at": "2025-10-04 00:00:00.000",
+      "job_title": "Compliance - Healthcare Risk Management Program Manager (O-5 Billet) Non-Supervisory",
+      "company": "Immigration and Customs Enforcement",
+      "location": "Washington, District of Columbia",
+      "keywords_detected": "compliance",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/846626800"
+    },
+    {
+      "posted_at": "2025-10-04 00:00:00.000",
+      "job_title": "Facility Healthcare Program Manager (O-5 Billet) Non-Supervisory",
+      "company": "Immigration and Customs Enforcement",
+      "location": "Pearsall, Texas",
+      "keywords_detected": "compliance,epa",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847264500"
+    },
+    {
+      "posted_at": "2025-10-04 00:00:00.000",
+      "job_title": "Health Services Administrator (O-6 Billet) Supervisory",
+      "company": "Immigration and Customs Enforcement",
+      "location": "Elizabeth, New Jersey",
+      "keywords_detected": "compliance",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/846588200"
+    },
+    {
+      "posted_at": "2025-10-04 00:00:00.000",
+      "job_title": "Clinical Nurse Manager (O-6 Billet) Supervisory",
+      "company": "Immigration and Customs Enforcement",
+      "location": "Batavia, New York",
+      "keywords_detected": "compliance",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/846588300"
+    },
+    {
+      "posted_at": "2025-10-04 00:00:00.000",
+      "job_title": "Clinical Pharmacist Practitioner - Pain",
+      "company": "Veterans Health Administration",
+      "location": "Oklahoma City, Oklahoma",
+      "keywords_detected": "compliance",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847487100"
+    },
+    {
+      "posted_at": "2025-10-04 00:00:00.000",
+      "job_title": "Health Application Services Program Officer (APP) (O-5 Billet) Non-Supervisory",
+      "company": "Immigration and Customs Enforcement",
+      "location": "District of Columbia, District of Columbia",
+      "keywords_detected": "epa",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/846607000"
+    },
+    {
+      "posted_at": "2025-10-03 19:38:14.800",
+      "job_title": "General Equipment Maintenance Repairer (Leader) NL-09",
+      "company": "Army Installation Management Command",
+      "location": "Fort Wainwright, Alaska",
+      "keywords_detected": "epa",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847498500"
+    },
+    {
+      "posted_at": "2025-10-03 18:13:35.193",
+      "job_title": "Health System Specialist",
+      "company": "Veterans Health Administration",
+      "location": "Anchorage, Alaska",
+      "keywords_detected": "epa",
+      "source": "usajobs",
+      "url": "https://www.usajobs.gov:443/job/847496100"
+    }
+  ],
+  "money_vector": {
+    "summary": [
+      {
+        "component": "Federal Lobbying (2025)",
+        "value": "$122,373,945",
+        "signal": "HIGH"
+      },
+      {
+        "component": "State Lobbying (2024)",
+        "value": "65 employers",
+        "signal": "N/A"
+      },
+      {
+        "component": "State Lobbying (2025)",
+        "value": "72 employers",
+        "signal": "N/A"
+      },
+      {
+        "component": "State Growth",
+        "value": "+7 (+10.8%)",
+        "signal": "HIGH"
+      },
+      {
+        "component": "Federal Awards (2025)",
+        "value": "$1,553,145,934",
+        "signal": "HIGH"
+      }
+    ],
+    "recipients": [
+      {
+        "name": "HEIDELBERG MATERIALS US INC",
+        "amount": 504992811.0
+      },
+      {
+        "name": "FCA US LLC",
+        "amount": 249999999.0
+      },
+      {
+        "name": "STATE OF INDIANA",
+        "amount": 128956782.34
+      },
+      {
+        "name": "PURDUE UNIVERSITY",
+        "amount": 126242382.49
+      },
+      {
+        "name": "HOOSIER ENERGY RURAL ELECTRIC COOPERATIVE INC",
+        "amount": 102785519.0
+      }
+    ]
+  },
+  "momentum_scores": [
+    {
+      "keyword": "compliance",
+      "people_count": 88,
+      "momentum_score": 0.26976744186046514
+    },
+    {
+      "keyword": "doe",
+      "people_count": 56,
+      "momentum_score": 0.17054263565891473
+    },
+    {
+      "keyword": "energy",
+      "people_count": 29,
+      "momentum_score": 0.08682170542635659
+    },
+    {
+      "keyword": "epa",
+      "people_count": 130,
+      "momentum_score": 0.4
+    },
+    {
+      "keyword": "ferc",
+      "people_count": 1,
+      "momentum_score": 0.0
+    },
+    {
+      "keyword": "grid",
+      "people_count": 6,
+      "momentum_score": 0.015503875968992248
+    },
+    {
+      "keyword": "nuclear",
+      "people_count": 8,
+      "momentum_score": 0.021705426356589147
+    },
+    {
+      "keyword": "puc",
+      "people_count": 2,
+      "momentum_score": 0.0031007751937984496
+    },
+    {
+      "keyword": "regulatory",
+      "people_count": 48,
+      "momentum_score": 0.14573643410852713
+    },
+    {
+      "keyword": "renewable",
+      "people_count": 2,
+      "momentum_score": 0.0031007751937984496
+    },
+    {
+      "keyword": "transmission",
+      "people_count": 8,
+      "momentum_score": 0.021705426356589147
+    },
+    {
+      "keyword": "utility",
+      "people_count": 26,
+      "momentum_score": 0.07751937984496125
+    }
+  ],
+  "energy_keywords": [
+    "energy",
+    "renewable",
+    "hydrogen",
+    "nuclear",
+    "grid",
+    "utility",
+    "transmission",
+    "FERC",
+    "PUC",
+    "regulatory",
+    "compliance",
+    "EPA",
+    "DOE",
+    "carbon"
+  ],
+  "metadata": {
+    "generated_at": "2025-10-09T00:00:00Z",
+    "data_sources": [
+      "MISO/money_vector/final_output/",
+      "project_canary/analysis/data/",
+      "MISO/people_vector/"
+    ]
+  }
+}
