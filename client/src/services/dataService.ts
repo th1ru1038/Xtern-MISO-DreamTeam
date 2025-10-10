@@ -7,9 +7,41 @@ import type {
   PeopleVectorItem,
   MoneyVectorItem,
   MomentumScore,
+  PaperVectorData,
+  PaperVectorItem,
+  PaperVectorTrendPoint,
   JobPosting,
   MomentumKeywordData,
+  TopRecipient,
 } from "../types/data";
+
+const toNumber = (value: unknown, fallback = 0): number => {
+  if (typeof value === "number" && !Number.isNaN(value)) {
+    return value;
+  }
+  if (typeof value === "string") {
+    const parsed = Number(value);
+    return Number.isNaN(parsed) ? fallback : parsed;
+  }
+  return fallback;
+};
+
+const toBoolean = (value: unknown): boolean => {
+  if (typeof value === "boolean") {
+    return value;
+  }
+  if (typeof value === "number") {
+    return value !== 0;
+  }
+  if (typeof value === "string") {
+    const normalized = value.trim().toLowerCase();
+    if (normalized === "" || normalized === "0" || normalized === "false") {
+      return false;
+    }
+    return true;
+  }
+  return false;
+};
 
 async function loadVectorDataFromJSON() {
   try {
@@ -35,7 +67,9 @@ export async function loadPeopleVectorData(): Promise<PeopleVectorItem[]> {
       job.job_title,
       job.company,
       job.keywords_detected,
-      job.location
+      job.location,
+      job.posted_at,
+      job.source
     )
   );
 }
@@ -53,45 +87,156 @@ export async function loadMoneyVectorData(): Promise<MoneyVectorItem[]> {
     value: string | number;
     signal?: string;
   }
-  data.money_vector.summary?.forEach((item: RawMoneyItem) => {
-    let value = 0;
-    const raw = String(item.value).trim();
-    // match number + optional suffix like K, M, B or %
-    const match = raw.match(/^\s*\$?([\d,.,]+)\s*([kKmMbB%]*)/) || [];
-    if (match && match[1]) {
-      const num = parseFloat(match[1].replace(/,/g, ""));
-      const suf = (match[2] || "").toLowerCase();
-      if (suf.includes("%")) {
-        value = num;
-      } else if (suf.includes("b")) {
-        value = num * 1e9;
-      } else if (suf.includes("m")) {
-        value = num * 1e6;
-      } else if (suf.includes("k")) {
-        value = num * 1e3;
-      } else {
-        // no suffix — apply heuristics: if this is a lobbying/award metric and number is small, assume millions
-        if (/lobb(y|ing)|award|federal|state/i.test(item.component || "")) {
-          if (num < 10000) value = num * 1e6;
-          else value = num;
-        } else {
-          value = num;
-        }
+
+  const stateEntries: Array<{
+    year: number;
+    employers: number;
+    signal?: string;
+  }> = [];
+
+  const summaryItems: RawMoneyItem[] = Array.isArray(data.money_vector.summary)
+    ? data.money_vector.summary
+    : [];
+
+  const parseCurrency = (num: number, suffix: string) => {
+    if (suffix.includes("%")) {
+      return num;
+    }
+    if (suffix.includes("b")) {
+      return num * 1e9;
+    }
+    if (suffix.includes("m")) {
+      return num * 1e6;
+    }
+    if (suffix.includes("k")) {
+      return num * 1e3;
+    }
+    return num;
+  };
+
+  summaryItems.forEach((item) => {
+    const component = item.component ?? "";
+    const raw = String(item.value ?? "").trim();
+    const normalizedSignal =
+      item.signal && item.signal.toUpperCase() !== "N/A"
+        ? item.signal
+        : undefined;
+
+    const yearMatch = component.match(/\((\d{4})\)/);
+    const year = yearMatch ? Number(yearMatch[1]) : undefined;
+
+    if (/state lobbying/i.test(component)) {
+      const employerMatch = raw.match(/(\d+(?:\.\d+)?)/);
+      const employers = employerMatch ? Number(employerMatch[1]) : 0;
+      if (year) {
+        stateEntries.push({
+          year,
+          employers,
+          signal: normalizedSignal,
+        });
       }
-    } else {
-      // fallback: try to parse percent or plain number
-      if (raw.includes("%")) value = parseFloat(raw.replace("%", ""));
-      else if (/employers/i.test(raw)) value = parseInt(raw.split(" ")[0]) || 0;
-      else value = parseFloat(raw.replace(/[$,]/g, "")) || 0;
+      return;
+    }
+
+    const percentInParens = raw.match(/\(([-+]?\d+(?:\.\d+)?)\s*%\)/);
+    const anyPercent = raw.match(/([-+]?\d+(?:\.\d+)?)\s*%/);
+    const leadingNumber = raw.match(/^\s*[-+]?\$?([\d,.,]+)/);
+
+    let numericValue = 0;
+    let unit: MoneyVectorItem["unit"] = "currency";
+    let displayValue: string | undefined;
+
+    if (percentInParens) {
+      numericValue = Number(percentInParens[1].replace(/,/g, ""));
+      unit = "percentage";
+    } else if (anyPercent) {
+      numericValue = Number(anyPercent[1].replace(/,/g, ""));
+      unit = "percentage";
+    } else if (leadingNumber) {
+      const num = Number(leadingNumber[1].replace(/,/g, ""));
+      const suffixMatch = raw
+        .slice(leadingNumber[0].length)
+        .match(/^\s*([kKmMbB%]*)/);
+      const suffix = suffixMatch ? suffixMatch[1].toLowerCase() : "";
+      numericValue = parseCurrency(num, suffix);
+      if (suffix.includes("%")) {
+        unit = "percentage";
+      }
+    }
+
+    if (unit === "percentage") {
+      const sign = numericValue < 0 ? "-" : "+";
+      const rounded = Number.isFinite(numericValue)
+        ? Math.abs(numericValue).toFixed(1)
+        : "0.0";
+      displayValue = `${sign}${rounded}%`;
     }
 
     moneyData.push({
-      category: item.component,
-      value: value,
-      signal: item.signal,
-      description: item.component,
+      category: component,
+      value: numericValue,
+      unit,
+      signal: normalizedSignal,
+      description: component,
+      ...(displayValue ? { displayValue } : {}),
     });
   });
+
+  if (stateEntries.length) {
+    stateEntries.sort((a, b) => b.year - a.year);
+    const latest = stateEntries[0];
+    const previous = stateEntries.find((entry) => entry.year < latest.year);
+
+    const diff = previous ? latest.employers - previous.employers : 0;
+    const pct =
+      previous && previous.employers ? (diff / previous.employers) * 100 : 0;
+
+    const derivedSignal = (() => {
+      if (latest.signal) {
+        return latest.signal;
+      }
+      if (!previous) {
+        return "MEDIUM";
+      }
+      if (pct >= 5) {
+        return "HIGH";
+      }
+      if (pct <= -5) {
+        return "LOW";
+      }
+      return "MEDIUM";
+    })();
+
+    let description = `${latest.year} employer count`;
+    if (previous) {
+      const direction = diff >= 0 ? "Up" : "Down";
+      description = `${direction} ${Math.abs(diff)} vs ${previous.year}`;
+    }
+
+    moneyData.push({
+      category: "State Lobbying",
+      value: latest.employers,
+      unit: "count",
+      unitLabel: "employers",
+      signal: derivedSignal,
+      description,
+      deltaValue: diff,
+      deltaUnit: "count",
+      deltaLabel: previous ? `vs ${previous.year}` : undefined,
+    });
+
+    const stateGrowthMetric = moneyData.find(
+      (item) => item.category === "State Growth"
+    );
+    if (stateGrowthMetric) {
+      stateGrowthMetric.deltaValue = diff;
+      stateGrowthMetric.deltaUnit = "count";
+      stateGrowthMetric.deltaLabel = previous
+        ? `vs ${previous.year}`
+        : undefined;
+      stateGrowthMetric.description = `Year-over-year change among ${latest.employers} employers`;
+    }
+  }
 
   return moneyData;
 }
@@ -105,31 +250,108 @@ export async function loadMomentumScores(): Promise<MomentumScore[]> {
   return processMomentumScores(data.momentum_scores);
 }
 
-export async function loadTopRecipients() {
+export async function loadTopRecipients(): Promise<TopRecipient[]> {
   const data = await loadVectorDataFromJSON();
   if (!data?.money_vector?.recipients) {
     return [
-      { name: "HEIDELBERG MATERIALS US INC", amount: 504992811.0 },
-      { name: "FCA US LLC", amount: 249999999.0 },
-      { name: "STATE OF INDIANA", amount: 128956782.34 },
-      { name: "PURDUE UNIVERSITY", amount: 126242382.49 },
+      {
+        name: "HEIDELBERG MATERIALS US INC",
+        amount: 504992811.0,
+        type: "federal",
+      },
+      {
+        name: "FCA US LLC",
+        amount: 249999999.0,
+        type: "federal",
+      },
+      {
+        name: "STATE OF INDIANA",
+        amount: 128956782.34,
+        type: "federal",
+      },
+      {
+        name: "PURDUE UNIVERSITY",
+        amount: 126242382.49,
+        type: "federal",
+      },
       {
         name: "HOOSIER ENERGY RURAL ELECTRIC COOPERATIVE INC",
         amount: 102785519.0,
+        type: "federal",
       },
     ];
   }
 
-  return data.money_vector.recipients.slice(0, 5);
+  const rawRecipients = Array.isArray(data.money_vector.recipients)
+    ? (data.money_vector.recipients as Array<Record<string, unknown>>)
+    : [];
+
+  const recipients: TopRecipient[] = rawRecipients.slice(0, 5).map((item) => {
+    const nameValue = item.name ?? item.recipient ?? "Unknown";
+    const name = typeof nameValue === "string" ? nameValue : String(nameValue);
+    const typeValue = item.type;
+    const normalizedType: TopRecipient["type"] =
+      typeValue === "state" || typeValue === "lobbying" ? typeValue : "federal";
+
+    return {
+      name,
+      amount: toNumber(item.amount, 0),
+      type: normalizedType,
+    };
+  });
+
+  return recipients;
 }
 
-export async function loadPaperVectorData() {
-  return [
-    { title: "Energy Policy Reform Act 2025", score: 0.85 },
-    { title: "Renewable Infrastructure Investment Bill", score: 0.72 },
-    { title: "Grid Modernization Standards", score: 0.68 },
-    { title: "Carbon Emissions Regulatory Framework", score: 0.91 },
-  ];
+export async function loadPaperVectorData(): Promise<PaperVectorData> {
+  const data = await loadVectorDataFromJSON();
+  if (!data?.paper_vector) {
+    return getSamplePaperVector();
+  }
+
+  const rawTopics = Array.isArray(data.paper_vector.topics)
+    ? (data.paper_vector.topics as Array<Record<string, unknown>>)
+    : [];
+
+  const topics: PaperVectorItem[] = rawTopics.map((item) => {
+    const titleCandidate = item.title ?? item.topic ?? "Untitled";
+    const title =
+      typeof titleCandidate === "string"
+        ? titleCandidate
+        : String(titleCandidate ?? "Untitled");
+    const topicValue = typeof item.topic === "string" ? item.topic : "";
+
+    return {
+      title,
+      topic: topicValue,
+      score: toNumber(item.score, 0),
+      date: typeof item.date === "string" ? item.date : "",
+      change30d: toNumber(
+        item.change_30d ?? (item as Record<string, unknown>).change30d,
+        0
+      ),
+      frNotices: toNumber(item.fr_notices, 0),
+      commentRate14d: toNumber(item.comment_rate_14d, 0),
+      underReview: toNumber(item.under_review, 0),
+      econSignificant: toBoolean(item.econ_significant),
+      whiteHouseHits: toNumber(item.white_house_hits, 0),
+      executiveOrderHits: toNumber(item.executive_order_hits, 0),
+    };
+  });
+
+  const rawTrend = Array.isArray(data.paper_vector.trend)
+    ? (data.paper_vector.trend as Array<Record<string, unknown>>)
+    : [];
+
+  const trend: PaperVectorTrendPoint[] = rawTrend.map((point) => ({
+    date: typeof point.date === "string" ? point.date : "",
+    score: toNumber(point.score, 0),
+  }));
+
+  return {
+    topics,
+    trend,
+  };
 }
 
 function getSamplePeopleData(): PeopleVectorItem[] {
@@ -168,7 +390,9 @@ function getSamplePeopleData(): PeopleVectorItem[] {
       job.job_title,
       job.company,
       job.keywords_detected,
-      job.location
+      job.location,
+      job.posted_at,
+      job.source
     )
   );
 }
@@ -200,7 +424,67 @@ function getSampleMomentumData(): MomentumScore[] {
   return processMomentumScores(momentumKeywordData);
 }
 
-export async function loadAllVectorData() {
+function getSamplePaperVector(): PaperVectorData {
+  const topics: PaperVectorItem[] = [
+    {
+      title: "Energy Policy Reform Act 2025",
+      topic: "energy_policy_reform_act_2025",
+      score: 0.85,
+      date: "2025-10-01",
+      change30d: 0.12,
+      frNotices: 4,
+      commentRate14d: 120,
+      underReview: 2,
+      econSignificant: true,
+      whiteHouseHits: 3,
+      executiveOrderHits: 1,
+    },
+    {
+      title: "Renewable Infrastructure Investment Bill",
+      topic: "renewable_infrastructure_investment_bill",
+      score: 0.72,
+      date: "2025-10-01",
+      change30d: -0.08,
+      frNotices: 2,
+      commentRate14d: 45,
+      underReview: 1,
+      econSignificant: false,
+      whiteHouseHits: 1,
+      executiveOrderHits: 0,
+    },
+    {
+      title: "Grid Modernization Standards",
+      topic: "grid_modernization_standards",
+      score: 0.68,
+      date: "2025-10-01",
+      change30d: 0.05,
+      frNotices: 1,
+      commentRate14d: 32,
+      underReview: 1,
+      econSignificant: false,
+      whiteHouseHits: 0,
+      executiveOrderHits: 0,
+    },
+  ];
+
+  const trend: PaperVectorTrendPoint[] = [
+    { date: "2025-09-01", score: 0.6 },
+    { date: "2025-09-15", score: 0.7 },
+    { date: "2025-10-01", score: 0.8 },
+  ];
+
+  return { topics, trend };
+}
+
+export interface VectorDataBundle {
+  peopleVector: PeopleVectorItem[];
+  moneyVector: MoneyVectorItem[];
+  momentumScores: MomentumScore[];
+  topRecipients: TopRecipient[];
+  paperVector: PaperVectorData;
+}
+
+export async function loadAllVectorData(): Promise<VectorDataBundle> {
   const [
     peopleVector,
     moneyVector,

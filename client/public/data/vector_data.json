@@ -502,6 +502,441 @@
       }
     ]
   },
+  "paper_vector": {
+    "topics": [
+      {
+        "title": "Ai Infrastructure",
+        "topic": "ai_infrastructure",
+        "score": 100.0,
+        "date": "2025-10-09",
+        "change_30d": 100.0,
+        "fr_notices": 0.0,
+        "comment_rate_14d": 2.0,
+        "under_review": 0,
+        "econ_significant": false,
+        "white_house_hits": 0.0,
+        "executive_order_hits": 7.0
+      },
+      {
+        "title": "Cooling",
+        "topic": "cooling",
+        "score": 0.0,
+        "date": "2025-10-09",
+        "change_30d": 0.0,
+        "fr_notices": 0.0,
+        "comment_rate_14d": 0.0,
+        "under_review": 0,
+        "econ_significant": false,
+        "white_house_hits": 0.0,
+        "executive_order_hits": 0.0
+      },
+      {
+        "title": "Data Center",
+        "topic": "data_center",
+        "score": 0.0,
+        "date": "2025-10-09",
+        "change_30d": 0.0,
+        "fr_notices": 0.0,
+        "comment_rate_14d": 0.0,
+        "under_review": 0,
+        "econ_significant": false,
+        "white_house_hits": 0.0,
+        "executive_order_hits": 0.0
+      },
+      {
+        "title": "Efficiency",
+        "topic": "efficiency",
+        "score": 0.0,
+        "date": "2025-10-09",
+        "change_30d": 0.0,
+        "fr_notices": 0.0,
+        "comment_rate_14d": 0.0,
+        "under_review": 0,
+        "econ_significant": false,
+        "white_house_hits": 0.0,
+        "executive_order_hits": 0.0
+      },
+      {
+        "title": "Grid Integration",
+        "topic": "grid_integration",
+        "score": 0.0,
+        "date": "2025-10-09",
+        "change_30d": 0.0,
+        "fr_notices": 0.0,
+        "comment_rate_14d": 0.0,
+        "under_review": 0,
+        "econ_significant": false,
+        "white_house_hits": 0.0,
+        "executive_order_hits": 0.0
+      }
+    ],
+    "trend": [
+      {
+        "date": "2025-07-11",
+        "score": 0.0
+      },
+      {
+        "date": "2025-07-12",
+        "score": 0.0
+      },
+      {
+        "date": "2025-07-13",
+        "score": 0.0
+      },
+      {
+        "date": "2025-07-14",
+        "score": 0.0
+      },
+      {
+        "date": "2025-07-15",
+        "score": 0.0
+      },
+      {
+        "date": "2025-07-16",
+        "score": 0.0
+      },
+      {
+        "date": "2025-07-17",
+        "score": 0.0
+      },
+      {
+        "date": "2025-07-18",
+        "score": 0.0
+      },
+      {
+        "date": "2025-07-19",
+        "score": 0.0
+      },
+      {
+        "date": "2025-07-20",
+        "score": 0.0
+      },
+      {
+        "date": "2025-07-21",
+        "score": 20.0
+      },
+      {
+        "date": "2025-07-22",
+        "score": 1.57
+      },
+      {
+        "date": "2025-07-23",
+        "score": 1.57
+      },
+      {
+        "date": "2025-07-24",
+        "score": 1.57
+      },
+      {
+        "date": "2025-07-25",
+        "score": 1.57
+      },
+      {
+        "date": "2025-07-26",
+        "score": 1.57
+      },
+      {
+        "date": "2025-07-27",
+        "score": 1.57
+      },
+      {
+        "date": "2025-07-28",
+        "score": 21.57
+      },
+      {
+        "date": "2025-07-29",
+        "score": 18.0
+      },
+      {
+        "date": "2025-07-30",
+        "score": 18.0
+      },
+      {
+        "date": "2025-07-31",
+        "score": 18.0
+      },
+      {
+        "date": "2025-08-01",
+        "score": 23.02
+      },
+      {
+        "date": "2025-08-02",
+        "score": 18.0
+      },
+      {
+        "date": "2025-08-03",
+        "score": 18.0
+      },
+      {
+        "date": "2025-08-04",
+        "score": 16.42
+      },
+      {
+        "date": "2025-08-05",
+        "score": 16.42
+      },
+      {
+        "date": "2025-08-06",
+        "score": 16.42
+      },
+      {
+        "date": "2025-08-07",
+        "score": 16.42
+      },
+      {
+        "date": "2025-08-08",
+        "score": 36.42
+      },
+      {
+        "date": "2025-08-09",
+        "score": 24.98
+      },
+      {
+        "date": "2025-08-10",
+        "score": 24.98
+      },
+      {
+        "date": "2025-08-11",
+        "score": 8.55
+      },
+      {
+        "date": "2025-08-12",
+        "score": 8.55
+      },
+      {
+        "date": "2025-08-13",
+        "score": 8.55
+      },
+      {
+        "date": "2025-08-14",
+        "score": 8.55
+      },
+      {
+        "date": "2025-08-15",
+        "score": 8.55
+      },
+      {
+        "date": "2025-08-16",
+        "score": 8.55
+      },
+      {
+        "date": "2025-08-17",
+        "score": 8.55
+      },
+      {
+        "date": "2025-08-18",
+        "score": 8.55
+      },
+      {
+        "date": "2025-08-19",
+        "score": 8.55
+      },
+      {
+        "date": "2025-08-20",
+        "score": 8.55
+      },
+      {
+        "date": "2025-08-21",
+        "score": 8.55
+      },
+      {
+        "date": "2025-08-22",
+        "score": 0.0
+      },
+      {
+        "date": "2025-08-23",
+        "score": 0.0
+      },
+      {
+        "date": "2025-08-24",
+        "score": 0.0
+      },
+      {
+        "date": "2025-08-25",
+        "score": 0.0
+      },
+      {
+        "date": "2025-08-26",
+        "score": 0.0
+      },
+      {
+        "date": "2025-08-27",
+        "score": 0.0
+      },
+      {
+        "date": "2025-08-28",
+        "score": 0.0
+      },
+      {
+        "date": "2025-08-29",
+        "score": 0.0
+      },
+      {
+        "date": "2025-08-30",
+        "score": 0.0
+      },
+      {
+        "date": "2025-08-31",
+        "score": 0.0
+      },
+      {
+        "date": "2025-09-01",
+        "score": 0.0
+      },
+      {
+        "date": "2025-09-02",
+        "score": 0.0
+      },
+      {
+        "date": "2025-09-03",
+        "score": 5.02
+      },
+      {
+        "date": "2025-09-04",
+        "score": 0.0
+      },
+      {
+        "date": "2025-09-05",
+        "score": 0.0
+      },
+      {
+        "date": "2025-09-06",
+        "score": 0.0
+      },
+      {
+        "date": "2025-09-07",
+        "score": 0.0
+      },
+      {
+        "date": "2025-09-08",
+        "score": 0.0
+      },
+      {
+        "date": "2025-09-09",
+        "score": 0.0
+      },
+      {
+        "date": "2025-09-10",
+        "score": 0.0
+      },
+      {
+        "date": "2025-09-11",
+        "score": 0.0
+      },
+      {
+        "date": "2025-09-12",
+        "score": 20.0
+      },
+      {
+        "date": "2025-09-13",
+        "score": 1.57
+      },
+      {
+        "date": "2025-09-14",
+        "score": 1.57
+      },
+      {
+        "date": "2025-09-15",
+        "score": 1.57
+      },
+      {
+        "date": "2025-09-16",
+        "score": 1.57
+      },
+      {
+        "date": "2025-09-17",
+        "score": 1.57
+      },
+      {
+        "date": "2025-09-18",
+        "score": 20.0
+      },
+      {
+        "date": "2025-09-19",
+        "score": 7.12
+      },
+      {
+        "date": "2025-09-20",
+        "score": 7.12
+      },
+      {
+        "date": "2025-09-21",
+        "score": 7.12
+      },
+      {
+        "date": "2025-09-22",
+        "score": 7.12
+      },
+      {
+        "date": "2025-09-23",
+        "score": 7.12
+      },
+      {
+        "date": "2025-09-24",
+        "score": 7.12
+      },
+      {
+        "date": "2025-09-25",
+        "score": 7.12
+      },
+      {
+        "date": "2025-09-26",
+        "score": 20.0
+      },
+      {
+        "date": "2025-09-27",
+        "score": 7.12
+      },
+      {
+        "date": "2025-09-28",
+        "score": 7.12
+      },
+      {
+        "date": "2025-09-29",
+        "score": 7.12
+      },
+      {
+        "date": "2025-09-30",
+        "score": 20.0
+      },
+      {
+        "date": "2025-10-01",
+        "score": 20.0
+      },
+      {
+        "date": "2025-10-02",
+        "score": 20.0
+      },
+      {
+        "date": "2025-10-03",
+        "score": 20.0
+      },
+      {
+        "date": "2025-10-04",
+        "score": 20.0
+      },
+      {
+        "date": "2025-10-05",
+        "score": 20.0
+      },
+      {
+        "date": "2025-10-06",
+        "score": 20.0
+      },
+      {
+        "date": "2025-10-07",
+        "score": 20.0
+      },
+      {
+        "date": "2025-10-08",
+        "score": 20.0
+      },
+      {
+        "date": "2025-10-09",
+        "score": 20.0
+      }
+    ]
+  },
   "momentum_scores": [
     {
       "keyword": "compliance",
@@ -584,6 +1019,7 @@
     "generated_at": "2025-10-09T00:00:00Z",
     "data_sources": [
       "MISO/money_vector/final_output/",
+      "MISO/paper_vector/topic_day.csv",
       "project_canary/analysis/data/",
       "MISO/people_vector/"
     ]

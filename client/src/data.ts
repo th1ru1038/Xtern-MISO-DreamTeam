@@ -3,7 +3,10 @@ import type {
   PeopleVectorItem,
   MoneyVectorItem,
   MomentumScore,
+  TopRecipient,
 } from "./types/data";
+
+export type { VectorDataBundle } from "./services/dataService";
 
 export { loadAllVectorData };
 
@@ -85,14 +88,15 @@ export const momentumScores: MomentumScore[] = [
   { date: "2025-10", score: 0.87 },
 ];
 
-export const topRecipients = [
-  { name: "HEIDELBERG MATERIALS US INC", amount: 504992811.0 },
-  { name: "FCA US LLC", amount: 249999999.0 },
-  { name: "STATE OF INDIANA", amount: 128956782.34 },
-  { name: "PURDUE UNIVERSITY", amount: 126242382.49 },
+export const topRecipients: TopRecipient[] = [
+  { name: "HEIDELBERG MATERIALS US INC", amount: 504992811.0, type: "federal" },
+  { name: "FCA US LLC", amount: 249999999.0, type: "federal" },
+  { name: "STATE OF INDIANA", amount: 128956782.34, type: "federal" },
+  { name: "PURDUE UNIVERSITY", amount: 126242382.49, type: "federal" },
   {
     name: "HOOSIER ENERGY RURAL ELECTRIC COOPERATIVE INC",
     amount: 102785519.0,
+    type: "federal",
   },
 ];
 
