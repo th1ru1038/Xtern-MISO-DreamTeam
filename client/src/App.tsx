@@ -53,7 +53,10 @@ function App() {
     value: Math.round(r.amount / 1000000), //
   }));
 
-  const keywordData = energyKeywords.slice(0, 6).map((k) => ({
+  const sortedKeywords = [...energyKeywords].sort(
+    (a, b) => b.momentum - a.momentum
+  );
+  const keywordData = sortedKeywords.slice(0, 6).map((k) => ({
     label: k.keyword.toUpperCase(),
     value: Math.round(k.momentum * 100),
   }));
@@ -94,7 +97,7 @@ function App() {
           <div className="keyword-stats">
             <span>
               Top Keyword:{" "}
-              <strong>{energyKeywords[0]?.keyword.toUpperCase()}</strong>
+              <strong>{sortedKeywords[0]?.keyword.toUpperCase()}</strong>
             </span>
             <span>
               Coverage:{" "}

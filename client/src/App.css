@@ -2,6 +2,10 @@ body {
   margin: 0;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 #root {
   padding: 18px;
 }
@@ -23,7 +27,7 @@ body {
 
 .financial-metrics {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 16px;
 }
 

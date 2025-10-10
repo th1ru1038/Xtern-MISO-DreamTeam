@@ -47,47 +47,64 @@ export default function MoneyVectorDisplay({
       label: item.category,
       value: item.value,
       displayValue,
-      signal: item.signal || "MEDIUM",
+      signal: (item.signal || "MEDIUM").toUpperCase(),
       description: item.description,
       category,
     };
   });
+  // normalize categories: strip year suffixes like ' (2024)' to aggregate
+  function normalizeLabel(label: string) {
+    return label.replace(/\s*\(\d{4}\)$/, ``).trim()
+  }
 
-  const dollarMetrics = metrics.filter((m) => m.category === "dollar");
-  const otherMetrics = metrics.filter((m) => m.category !== "dollar");
+  // aggregate metrics with the same normalized label
+  const aggMap: Record<string, MoneyMetric> = {}
+  metrics.forEach((m) => {
+    const base = normalizeLabel(m.label)
+    if (!aggMap[base]) {
+      aggMap[base] = { ...m, label: base }
+    } else {
+      // sum numeric value
+      aggMap[base].value += m.value
+      // pick highest signal
+      const order: Record<string, number> = { low: 0, medium: 1, high: 2 }
+      const a = aggMap[base].signal?.toLowerCase() || 'medium'
+      const b = m.signal?.toLowerCase() || 'medium'
+      aggMap[base].signal = (order[a] ?? 1) >= (order[b] ?? 1) ? aggMap[base].signal : m.signal?.toUpperCase()
+    }
+  })
+
+  const aggregated = Object.values(aggMap)
+
+  const otherMetrics = aggregated.filter((m) => m.category !== "dollar");
 
   return (
     <div className="money-vector-display">
       <div className="financial-metrics">
-        {dollarMetrics.map((metric, index) => (
-          <div key={index} className="metric-card large">
+        {aggregated.map((metric, index) => (
+          <div
+            key={index}
+            className={`metric-card ${metric.category === 'dollar' ? 'large' : 'small'}`}
+          >
             <div className="metric-header">
               <span className="metric-label">{metric.label}</span>
               <span className={`signal-badge ${metric.signal.toLowerCase()}`}>
                 {metric.signal}
               </span>
             </div>
-            <div className="metric-value-large">{metric.displayValue}</div>
+
+            {metric.category === 'dollar' ? (
+              <div className="metric-value-large">{metric.displayValue}</div>
+            ) : (
+              <div className="metric-value-medium">{metric.displayValue}</div>
+            )}
+
             {metric.description && (
               <div className="metric-description">{metric.description}</div>
             )}
           </div>
         ))}
       </div>
-
-      {otherMetrics.length > 0 && (
-        <div className="supporting-metrics">
-          {otherMetrics.map((metric, index) => (
-            <div key={index} className="metric-card small">
-              <div className="metric-label-small">{metric.label}</div>
-              <div className="metric-value-medium">{metric.displayValue}</div>
-              <span className={`signal-badge ${metric.signal.toLowerCase()}`}>
-                {metric.signal}
-              </span>
-            </div>
-          ))}
-        </div>
-      )}
 
       <div className="money-insights">
         <div className="insight-header">Key Insights</div>
@@ -98,9 +115,7 @@ export default function MoneyVectorDisplay({
               <div className="insight-title">Total Federal Activity</div>
               <div className="insight-value">
                 $
-                {(
-                  dollarMetrics.reduce((sum, m) => sum + m.value, 0) / 1e9
-                ).toFixed(2)}
+                {(metrics.reduce((sum: number, m: MoneyMetric) => sum + m.value, 0) / 1e9).toFixed(2)}
                 B
               </div>
               <div className="insight-note">Combined lobbying and awards</div>

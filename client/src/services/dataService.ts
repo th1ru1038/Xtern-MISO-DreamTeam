@@ -48,22 +48,48 @@ export async function loadMoneyVectorData(): Promise<MoneyVectorItem[]> {
 
   const moneyData: MoneyVectorItem[] = [];
 
-  data.money_vector.summary?.forEach((item: any) => {
+  interface RawMoneyItem {
+    component: string;
+    value: string | number;
+    signal?: string;
+  }
+  data.money_vector.summary?.forEach((item: RawMoneyItem) => {
     let value = 0;
-    const valueStr = item.value.toString();
-    if (valueStr.includes("$")) {
-      value = parseFloat(valueStr.replace(/[$,]/g, ""));
-    } else if (valueStr.includes("%")) {
-      value = parseFloat(valueStr.replace("%", ""));
-    } else if (valueStr.includes("employers")) {
-      value = parseInt(valueStr.split(" ")[0]);
+    const raw = String(item.value).trim();
+    // match number + optional suffix like K, M, B or %
+    const match = raw.match(/^\s*\$?([\d,.,]+)\s*([kKmMbB%]*)/) || [];
+    if (match && match[1]) {
+      const num = parseFloat(match[1].replace(/,/g, ""));
+      const suf = (match[2] || "").toLowerCase();
+      if (suf.includes("%")) {
+        value = num;
+      } else if (suf.includes("b")) {
+        value = num * 1e9;
+      } else if (suf.includes("m")) {
+        value = num * 1e6;
+      } else if (suf.includes("k")) {
+        value = num * 1e3;
+      } else {
+        // no suffix — apply heuristics: if this is a lobbying/award metric and number is small, assume millions
+        if (/lobb(y|ing)|award|federal|state/i.test(item.component || "")) {
+          if (num < 10000) value = num * 1e6;
+          else value = num;
+        } else {
+          value = num;
+        }
+      }
+    } else {
+      // fallback: try to parse percent or plain number
+      if (raw.includes("%")) value = parseFloat(raw.replace("%", ""));
+      else if (/employers/i.test(raw)) value = parseInt(raw.split(" ")[0]) || 0;
+      else value = parseFloat(raw.replace(/[$,]/g, "")) || 0;
     }
 
     moneyData.push({
       category: item.component,
       value: value,
       signal: item.signal,
-      description: `Real data from MISO analysis: ${item.component}`,
+      description: item.component,
     });
   });
 

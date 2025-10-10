@@ -20,9 +20,20 @@ body {
     Roboto, "Helvetica Neue", Arial;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html,
+body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
 .dashboard {
   padding: 20px;
-  max-width: 1600px;
+  max-width: min(1600px, calc(100vw - 40px));
   margin: 0 auto;
   display: flex;
   flex-direction: column;
