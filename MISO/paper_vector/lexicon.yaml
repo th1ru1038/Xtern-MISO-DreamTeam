@@ -1,143 +1,23 @@
-# Lexicon tailored for FERC Order No. 2023 (Improvements to Generator Interconnection Procedures and Agreements)
-# Focus: interconnection queue reform, cluster studies, affected system coordination, inverter-based resource (IBR) modeling, storage, and pro forma LGIP/SGIP/LGIA/SGIA changes.
-
-grid_integration:
-  include:
-    # Core order concepts
-    - grid
-    - grid integration
-    - generator interconnection
-    - interconnection procedures
-    - interconnection agreements
-    - interconnection request
-    - queue reform
-    - interconnection queue
-    - cluster study
-    - cluster studies
-    - cluster study process
-    - cluster restudy
-    - withdrawal penalties
-    - site control
-    - commercial readiness
-    - milestone payment
-    - study deposit
-    - affected system
-    - affected system study
-    - coordinated affected system study
-    - modeling and ride-through
-    - inverter-based resources
-    - IBR modeling
-    - ride-through requirements
-    - voltage ride-through
-    - frequency ride-through
-    - short-circuit modeling
-    - EMT modeling
-    - stability study
-    - system impact study
-    - facilities study
-    - feasibility study
-    - deliverability assessment
-    - network upgrade
-    - conditional firm service
-    - curtailment
-    - congestion management
-    - transmission constraints
-    - transmission expansion
-    - transmission planning coordination
-    - regional transmission
-    - queue backlog
-    - queue management
-    - study timeline
-    - study deadlines
-    - missed deadline penalties
-    - dispute resolution (interconnection)
-    - ride-through and protection settings
-    - ride-through for storage
-    - hybrid resources
-    - co-located resources
-    - shared interconnection request
-    - resource adequacy impacts
-    - pro forma LGIP
-    - pro forma SGIP
-    - pro forma LGIA
-    - pro forma SGIA
-    - small generator interconnection
-    - large generator interconnection
-    - generator intertie
-    - transmission service request (interconnection context)
-    - MISO interconnection
-    - RTO interconnection
-    - ISO interconnection
-    - FERC compliance filing (Order 2023)
-    - compliance with Order No. 2023
-    - compliance deadline (Order 2023)
-    - implementation plan (Order 2023)
-    - tariff revisions (Order 2023)
-    - tariff compliance (interconnection)
-
-    # Data-center & new load linkages (forward-looking signal capture)
-    - load interconnection
-    - large load interconnection
-    - data center interconnection
-    - high-density load interconnection
-    - behind-the-meter interconnection (non-retail)
-    - dual-use resources (gen + load)
-
-    # Study artifacts & docs
-    - interconnection study report
-    - restudy notice
-    - cluster window
-    - study assumptions
-    - study queue window
-    - cluster tranche
-
-  exclude:
-    # Noise terms to suppress retail/consumer content
-    - rooftop solar
-    - home solar
-    - residential interconnection
-    - net metering
-    - EV home charger
-    - microinverter (residential context)
-    - HOA solar
-    - building permit (residential)
-    - small rooftop PV
-    - off-grid cabin
-
-# Optional: agency scoping helpers for retrieval layers
-agencies:
-  include:
-    - Federal Energy Regulatory Commission
-    - FERC
-    - Department of Energy
-    - DOE
-    - Regional Transmission Organization
-    - RTO
-    - Independent System Operator
-    - ISO
-    - MISO
-    - PJM
-    - SPP
-    - CAISO
-    - NYISO
-    - ISO-NE
-
-# Optional: synonyms/aliases to catch phrasing variance
-aliases:
-  interconnection:
-    - GI (generator interconnection)
-    - IC request
-    - LGIP/SGIP
-    - LGIA/SGIA
-  affected_system:
-    - third-party system impact
-    - neighboring TSO impacts
-    - coordinated study across systems
-  cluster_study:
-    - group study
-    - phased cluster
-    - tranche study
-  deliverability:
-    - injection rights
-    - ERIS to NRIS transition
-    - firm deliverability assessment
+category: Data Centers
+description: Keywords associated with data center infrastructure, cooling, and energy demand.
+keywords:
+  - data center
+  - hyperscale
+  - colocation
+  - server farm
+  - rack density
+  - cooling load
+  - power usage effectiveness
+  - backup generator
+  - UPS system
+  - liquid cooling
+  - edge computing
+  - AI workload
+  - IT load
+  - facility power demand
+  - grid connection
+  - renewable power sourcing
+  - battery storage
+  - power purchase agreement
+  - microgrid integration
+  - energy efficiency
