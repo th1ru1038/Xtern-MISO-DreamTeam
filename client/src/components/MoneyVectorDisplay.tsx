@@ -1,21 +1,83 @@
+type MoneyUnit = "currency" | "percentage" | "count";
+
 interface MoneyMetric {
   label: string;
   value: number;
   displayValue: string;
   signal: string;
   description?: string;
-  category: "dollar" | "percentage" | "count";
+  unit: MoneyUnit;
+  unitLabel?: string;
+  deltaValue?: number;
+  deltaUnit?: MoneyUnit;
+  deltaLabel?: string;
 }
 
 function formatCurrency(value: number): string {
   if (value >= 1e9) {
     return `$${(value / 1e9).toFixed(2)}B`;
-  } else if (value >= 1e6) {
+  }
+  if (value >= 1e6) {
     return `$${(value / 1e6).toFixed(1)}M`;
-  } else if (value >= 1e3) {
+  }
+  if (value >= 1e3) {
     return `$${(value / 1e3).toFixed(0)}K`;
   }
   return `$${value.toFixed(0)}`;
+}
+
+function formatDisplay(
+  value: number,
+  unit: MoneyUnit,
+  unitLabel?: string
+): string {
+  if (unit === "currency") {
+    return formatCurrency(value);
+  }
+  if (unit === "percentage") {
+    const rounded = Number.isFinite(value) ? value : 0;
+    const prefix = rounded >= 0 ? "+" : "";
+    return `${prefix}${rounded.toFixed(1)}%`;
+  }
+  const suffix = unitLabel ? ` ${unitLabel}` : "";
+  return `${Math.round(value).toLocaleString()}${suffix}`;
+}
+
+function formatDelta(
+  value: number | undefined,
+  unit: MoneyUnit | undefined,
+  unitLabel?: string
+): string | null {
+  if (value === undefined || unit === undefined) {
+    return null;
+  }
+
+  const sign = value < 0 ? "-" : "+";
+  const abs = Math.abs(value);
+
+  if (unit === "currency") {
+    return `${sign}${formatCurrency(abs)}`;
+  }
+
+  if (unit === "percentage") {
+    return `${sign}${abs.toFixed(1)}%`;
+  }
+
+  const suffix = unitLabel ? ` ${unitLabel}` : "";
+  return `${sign}${Math.round(abs).toLocaleString()}${suffix}`.trim();
+}
+
+function guessUnit(category: string, value: number): MoneyUnit {
+  if (/growth|percent/i.test(category)) {
+    return "percentage";
+  }
+  if (/employer|recipient|award count|count/i.test(category)) {
+    return "count";
+  }
+  if (!Number.isFinite(value) || value === 0) {
+    return "currency";
+  }
+  return "currency";
 }
 
 export default function MoneyVectorDisplay({
@@ -26,22 +88,20 @@ export default function MoneyVectorDisplay({
     value: number;
     signal?: string;
     description?: string;
+    unit?: MoneyUnit;
+    unitLabel?: string;
+    displayValue?: string;
+    deltaValue?: number;
+    deltaUnit?: MoneyUnit;
+    deltaLabel?: string;
   }>;
 }) {
   const metrics: MoneyMetric[] = data.map((item) => {
-    let displayValue = "";
-    let category: "dollar" | "percentage" | "count" = "dollar";
-
-    if (item.category.toLowerCase().includes("growth")) {
-      displayValue = `+${item.value.toFixed(1)}%`;
-      category = "percentage";
-    } else if (item.category.toLowerCase().includes("employers")) {
-      displayValue = `${item.value}`;
-      category = "count";
-    } else {
-      displayValue = formatCurrency(item.value);
-      category = "dollar";
-    }
+    const unit: MoneyUnit = item.unit ?? guessUnit(item.category, item.value);
+    const unitLabel =
+      item.unitLabel ?? (unit === "count" ? "employers" : undefined);
+    const displayValue =
+      item.displayValue ?? formatDisplay(item.value, unit, unitLabel);
 
     return {
       label: item.category,
@@ -49,24 +109,24 @@ export default function MoneyVectorDisplay({
       displayValue,
       signal: (item.signal || "MEDIUM").toUpperCase(),
       description: item.description,
-      category,
+      unit,
+      unitLabel,
+      deltaValue: item.deltaValue,
+      deltaUnit: item.deltaUnit,
+      deltaLabel: item.deltaLabel,
     };
   });
-  // normalize categories: strip year suffixes like ' (2024)' to aggregate
   function normalizeLabel(label: string) {
     return label.replace(/\s*\(\d{4}\)$/, ``).trim();
   }
 
-  // aggregate metrics with the same normalized label
   const aggMap: Record<string, MoneyMetric> = {};
   metrics.forEach((m) => {
     const base = normalizeLabel(m.label);
     if (!aggMap[base]) {
       aggMap[base] = { ...m, label: base };
     } else {
-      // sum numeric value
       aggMap[base].value += m.value;
-      // pick highest signal
       const order: Record<string, number> = { low: 0, medium: 1, high: 2 };
       const a = aggMap[base].signal?.toLowerCase() || "medium";
       const b = m.signal?.toLowerCase() || "medium";
@@ -77,9 +137,31 @@ export default function MoneyVectorDisplay({
     }
   });
 
-  const aggregated = Object.values(aggMap);
+  const aggregated = Object.values(aggMap).map((metric) => ({
+    ...metric,
+    displayValue:
+      metric.displayValue ??
+      formatDisplay(metric.value, metric.unit, metric.unitLabel),
+  }));
 
-  const otherMetrics = aggregated.filter((m) => m.category !== "dollar");
+  const currencyMetrics = aggregated.filter((m) => m.unit === "currency");
+  const stateLobbyMetric = aggregated.find(
+    (m) => m.label.toLowerCase() === "state lobbying"
+  );
+  const stateGrowthMetric = aggregated.find(
+    (m) => m.label.toLowerCase() === "state growth"
+  );
+  const momentumDelta = formatDelta(
+    stateLobbyMetric?.deltaValue,
+    stateLobbyMetric?.deltaUnit,
+    stateLobbyMetric?.unitLabel
+  );
+  const momentumValue = momentumDelta ?? stateGrowthMetric?.displayValue ?? "—";
+  const momentumNote = stateGrowthMetric
+    ? `YoY change ${stateGrowthMetric.displayValue}${
+        stateGrowthMetric.deltaLabel ? ` (${stateGrowthMetric.deltaLabel})` : ""
+      }`
+    : "Year-over-year growth trend";
 
   return (
     <div className="money-vector-display">
@@ -88,7 +170,7 @@ export default function MoneyVectorDisplay({
           <div
             key={index}
             className={`metric-card ${
-              metric.category === "dollar" ? "large" : "small"
+              metric.unit === "currency" ? "large" : "small"
             }`}
           >
             <div className="metric-header">
@@ -98,7 +180,7 @@ export default function MoneyVectorDisplay({
               </span>
             </div>
 
-            {metric.category === "dollar" ? (
+            {metric.unit === "currency" ? (
               <div className="metric-value-large">{metric.displayValue}</div>
             ) : (
               <div className="metric-value-medium">{metric.displayValue}</div>
@@ -121,7 +203,7 @@ export default function MoneyVectorDisplay({
               <div className="insight-value">
                 $
                 {(
-                  metrics.reduce(
+                  currencyMetrics.reduce(
                     (sum: number, m: MoneyMetric) => sum + m.value,
                     0
                   ) / 1e9
@@ -132,18 +214,13 @@ export default function MoneyVectorDisplay({
             </div>
           </div>
 
-          {otherMetrics.find((m) => m.category === "percentage") && (
+          {(stateGrowthMetric || stateLobbyMetric) && (
             <div className="insight-item">
               <div className="insight-icon">📈</div>
               <div className="insight-content">
                 <div className="insight-title">Market Momentum</div>
-                <div className="insight-value">
-                  {
-                    otherMetrics.find((m) => m.category === "percentage")
-                      ?.displayValue
-                  }
-                </div>
-                <div className="insight-note">Year-over-year growth trend</div>
+                <div className="insight-value">{momentumValue}</div>
+                <div className="insight-note">{momentumNote}</div>
               </div>
             </div>
           )}

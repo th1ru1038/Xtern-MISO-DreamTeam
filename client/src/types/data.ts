@@ -4,6 +4,8 @@ export interface PeopleVectorItem {
   relevance?: number;
   location?: string;
   keywords?: string[];
+  postedAt?: string;
+  source?: string;
 }
 
 export interface MoneyVectorItem {
@@ -11,13 +13,36 @@ export interface MoneyVectorItem {
   value: number;
   signal?: string;
   description?: string;
+  unit?: "currency" | "percentage" | "count";
+  unitLabel?: string;
+  displayValue?: string;
+  deltaValue?: number;
+  deltaUnit?: "currency" | "percentage" | "count";
+  deltaLabel?: string;
 }
 
 export interface PaperVectorItem {
   title: string;
+  topic: string;
   score: number;
-  keywords?: string[];
-  relevance?: number;
+  date: string;
+  change30d: number;
+  frNotices: number;
+  commentRate14d: number;
+  underReview: number;
+  econSignificant: boolean;
+  whiteHouseHits: number;
+  executiveOrderHits: number;
+}
+
+export interface PaperVectorTrendPoint {
+  date: string;
+  score: number;
+}
+
+export interface PaperVectorData {
+  topics: PaperVectorItem[];
+  trend: PaperVectorTrendPoint[];
 }
 
 export interface MomentumScore {
