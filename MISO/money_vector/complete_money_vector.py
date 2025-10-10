@@ -76,14 +76,64 @@ overall = "HIGH" if list(score.values()).count("HIGH") >= 2 else "MEDIUM"
 print(f"\n  🎯 OVERALL MOMENTUM: {overall} 🔥")
 
 # ===================================================================
-# CREATE DELIVERABLES
+# CREATE DELIVERABLES - DETAILED FORMAT
 # ===================================================================
-print("\n" + "="*70)
+print("\n" + "=" * 70)
 print("CREATING FILES")
-print("="*70)
+print("=" * 70)
 
 os.makedirs("final_output", exist_ok=True)
 
+# Build detailed row-by-row dataset
+money_vector_data = []
+
+# Add state lobbying entries (from ILRC)
+for idx, row in ilrc_2025.iterrows():
+    employer_name = row.get('Lobbyist', 'Unknown')
+    # Try to extract any dollar amounts from the row
+    total_col = [c for c in ilrc_2025.columns if 'Total' in c and 'Exp' in c]
+    amount = row[total_col[0]] if total_col else 0
+
+    money_vector_data.append({
+        'date': '2025',
+        'organization': employer_name,
+        'spend_amount': amount if pd.notna(amount) else 0,
+        'topic': 'state lobbying (energy)'
+    })
+
+# Add federal awards entries (from USAspending)
+for idx, row in assistance.iterrows():
+    recipient = row.get('recipient_name', 'Unknown')
+    amount = pd.to_numeric(row.get('total_obligated_amount', 0), errors='coerce')
+    action_date = row.get('award_latest_action_date', '2025')
+
+    # Try to infer topic from award description
+    desc = str(row.get('award_description', '')).lower()
+    if 'data' in desc or 'computing' in desc:
+        topic = 'data centers'
+    elif 'battery' in desc or 'storage' in desc:
+        topic = 'battery storage'
+    elif 'grid' in desc or 'transmission' in desc:
+        topic = 'grid modernization'
+    elif 'renewable' in desc or 'solar' in desc or 'wind' in desc:
+        topic = 'renewable energy'
+    else:
+        topic = 'energy infrastructure'
+
+    money_vector_data.append({
+        'date': action_date if pd.notna(action_date) else '2025',
+        'organization': recipient,
+        'spend_amount': amount if pd.notna(amount) else 0,
+        'topic': topic
+    })
+
+# Create DataFrame and save
+df_money = pd.DataFrame(money_vector_data)
+df_money = df_money.sort_values('date', ascending=False)
+df_money.to_csv("final_output/MONEY_VECTOR_DETAILED.csv", index=False)
+print("✅ Created: final_output/MONEY_VECTOR_DETAILED.csv")
+
+# Also create the summary table
 summary = pd.DataFrame({
     'Component': [
         'Federal Lobbying (2025)',
@@ -111,42 +161,28 @@ summary = pd.DataFrame({
 summary.to_csv("final_output/MONEY_VECTOR_SUMMARY.csv", index=False)
 print("✅ Created: final_output/MONEY_VECTOR_SUMMARY.csv")
 
+# Keep the findings document
 findings = f'''# MONEY VECTOR - FINAL REPORT
 
 ## Overall Assessment: {overall} MOMENTUM 🔥
 
+Total entries in detailed dataset: {len(df_money)}
+
 ---
 
 ## Component 1: Federal Lobbying
-- **Source:** OpenSecrets Energy & Natural Resources Sector
-- **Year:** 2025 (Q1)
 - **Amount:** ${federal_lobbying_amount:,}
 - **Signal:** {score['federal_lobbying']}
 
-The energy sector spent over $122M on federal lobbying in Q1 2025.
-
----
-
 ## Component 2: State Lobbying (Indiana)
-- **Source:** Indiana Lobby Registration Commission
-- **2024:** {count_2024} energy-related employers
-- **2025:** {count_2025} energy-related employers
+- **2024:** {count_2024} employers
+- **2025:** {count_2025} employers
 - **Growth:** +{growth} (+{growth_pct:.1f}%)
 - **Signal:** {score['state_growth']}
 
-Energy lobbying activity in Indiana grew {growth_pct:.1f}% year-over-year.
-
----
-
 ## Component 3: Federal Awards (DOE/EPA)
-- **Source:** USAspending
-- **Year:** 2025
 - **Total:** ${awards_total:,.0f}
 - **Signal:** {score['federal_awards']}
-
-### Breakdown
-- Assistance (Grants): ${assistance_total:,.0f} ({len(assistance)} awards)
-- Contracts: ${contracts_total:,.0f} ({len(contracts)} awards)
 
 ### Top 5 Recipients
 '''
@@ -156,20 +192,6 @@ for i, (name, amt) in enumerate(top5.items(), 1):
 
 findings += f'''
 
----
-
-## Key Insights for MISO
-
-1. **$1.5B+ in federal awards** to Indiana signals major energy infrastructure investment
-2. **State lobbying growth** indicates local policy mobilization
-3. **Top recipients include utilities** (Hoosier Energy: $103M) = grid modernization
-4. **Industrial awards** (Heidelberg: $505M, FCA: $250M) = high energy demand
-
-## Data Sources
-- Federal Lobbying: OpenSecrets.org
-- State Lobbying: Indiana ILRC (2024-2025 Employer Lobbyist Totals)
-- Federal Awards: USAspending.gov (DOE/EPA to Indiana, 2025)
-
 **Report generated:** {pd.Timestamp.now().strftime('%Y-%m-%d %I:%M %p')}
 '''
 
@@ -177,14 +199,11 @@ with open("final_output/MONEY_VECTOR_FINDINGS.md", "w") as f:
     f.write(findings)
 print("✅ Created: final_output/MONEY_VECTOR_FINDINGS.md")
 
-top5.to_csv("final_output/TOP_RECIPIENTS.csv")
-print("✅ Created: final_output/TOP_RECIPIENTS.csv")
-
-print("\n" + "="*70)
+print("\n" + "=" * 70)
 print("✅ MONEY VECTOR COMPLETE!")
-print("="*70)
-print("\nFiles created in: final_output/")
-print("  1. MONEY_VECTOR_SUMMARY.csv")
-print("  2. MONEY_VECTOR_FINDINGS.md")
-print("  3. TOP_RECIPIENTS.csv")
+print("=" * 70)
+print("\nFiles created:")
+print("  1. MONEY_VECTOR_DETAILED.csv     ← Row-by-row format (date, org, amount, topic)")
+print("  2. MONEY_VECTOR_SUMMARY.csv      ← Summary table")
+print("  3. MONEY_VECTOR_FINDINGS.md      ← Full report")
 print("\n🎉 Ready for your presentation!")
