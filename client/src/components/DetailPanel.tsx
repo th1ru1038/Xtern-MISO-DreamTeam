@@ -6,6 +6,8 @@ interface JobItem {
   relevance?: number;
   location?: string;
   keywords?: string[];
+  postedAt?: string;
+  source?: string;
 }
 
 export default function DetailPanel({
@@ -35,6 +37,19 @@ export default function DetailPanel({
   const title = parts[0] || item.label;
   const company = parts[1] || "";
 
+  const formatDate = (value?: string) => {
+    if (!value) return null;
+    const parsed = new Date(value);
+    if (Number.isNaN(parsed.getTime())) {
+      return value;
+    }
+    return parsed.toLocaleDateString(undefined, {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  };
+
   return (
     <div className="card detail-panel">
       <div className="detail-header">
@@ -44,6 +59,25 @@ export default function DetailPanel({
           <div className="detail-location">📍 {item.location}</div>
         )}
       </div>
+
+      {(item.postedAt || item.source) && (
+        <div className="detail-section detail-meta">
+          {item.postedAt && (
+            <div className="detail-meta-item">
+              <span className="detail-meta-label">Posted</span>
+              <span className="detail-meta-value">
+                {formatDate(item.postedAt)}
+              </span>
+            </div>
+          )}
+          {item.source && (
+            <div className="detail-meta-item">
+              <span className="detail-meta-label">Source</span>
+              <span className="detail-meta-value">{item.source}</span>
+            </div>
+          )}
+        </div>
+      )}
 
       {item.keywords && item.keywords.length > 0 && (
         <div className="detail-section">

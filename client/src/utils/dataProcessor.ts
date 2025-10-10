@@ -3,6 +3,10 @@ import type {
   PeopleVectorItem,
   MoneyVectorItem,
   MomentumScore,
+  MomentumKeywordData,
+  JobPosting,
+  EnergySector,
+  GeographicalData,
 } from "../types/data";
 
 // Keywords from MISO/people_vector/keywords.txt
@@ -30,7 +34,9 @@ export function processJobToVector(
   jobTitle: string,
   company: string,
   keywordsDetected: string,
-  location: string
+  location: string,
+  postedAt?: string,
+  source?: string
 ): PeopleVectorItem {
   const detectedKeywords = keywordsDetected
     .toLowerCase()
@@ -52,6 +58,8 @@ export function processJobToVector(
     relevance: relevanceScore,
     location,
     keywords: detectedKeywords,
+    postedAt,
+    source,
   };
 }
 
@@ -90,7 +98,9 @@ export function processMoneyData(): MoneyVectorItem[] {
 /**
  * Process momentum scores from analysis data
  */
-export function processMomentumScores(momentumData: any[]): MomentumScore[] {
+export function processMomentumScores(
+  momentumData: MomentumKeywordData[]
+): MomentumScore[] {
   // Generate monthly momentum scores based on keyword activity
   const months = [
     "2025-01",
@@ -125,14 +135,16 @@ export function processMomentumScores(momentumData: any[]): MomentumScore[] {
 /**
  * Calculate top energy sectors by job activity
  */
-export function getTopEnergySectors(
-  jobData: any[]
-): { sector: string; count: number; momentum: number }[] {
+export function getTopEnergySectors(jobData: JobPosting[]): EnergySector[] {
   const sectorCounts: Record<string, number> = {};
 
   jobData.forEach((job) => {
-    const keywords = job.keywords_detected.toLowerCase().split(",");
-    keywords.forEach((keyword: string) => {
+    const keywords = job.keywords_detected
+      .toLowerCase()
+      .split(",")
+      .map((keyword) => keyword.trim())
+      .filter(Boolean);
+    keywords.forEach((keyword) => {
       const trimmed = keyword.trim();
       if (ENERGY_KEYWORDS.includes(trimmed)) {
         sectorCounts[trimmed] = (sectorCounts[trimmed] || 0) + 1;
@@ -154,8 +166,8 @@ export function getTopEnergySectors(
  * Process geographical distribution of jobs
  */
 export function getGeographicalDistribution(
-  jobData: any[]
-): { state: string; count: number }[] {
+  jobData: JobPosting[]
+): GeographicalData[] {
   const stateCounts: Record<string, number> = {};
 
   jobData.forEach((job) => {

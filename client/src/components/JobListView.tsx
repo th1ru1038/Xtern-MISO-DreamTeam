@@ -4,6 +4,8 @@ interface JobPosting {
   location?: string;
   keywords?: string[];
   vector?: number[];
+  postedAt?: string;
+  source?: string;
 }
 
 export default function JobListView({
