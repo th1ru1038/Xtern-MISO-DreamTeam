@@ -66,33 +66,68 @@ export function processJobToVector(
 /**
  * Process money vector data from CSV summary
  */
-export function processMoneyData(): MoneyVectorItem[] {
-  return [
-    {
-      category: "Federal Lobbying 2025",
-      value: 122373945,
-      signal: "HIGH",
-      description: "Total federal energy lobbying expenditure",
-    },
-    {
-      category: "Federal Awards 2025",
-      value: 1553145934,
-      signal: "HIGH",
-      description: "Federal awards to Indiana (DOE/EPA)",
-    },
-    {
-      category: "State Lobbying Growth",
-      value: 10.8,
-      signal: "HIGH",
-      description: "Year-over-year growth percentage",
-    },
-    {
-      category: "State Employers 2025",
-      value: 72,
-      signal: "MEDIUM",
-      description: "Number of employers engaged in lobbying",
-    },
-  ];
+export type RawMoneyDatum = {
+  category: string;
+  value: number;
+  description?: string;
+};
+
+export function computeSignal(
+  value: number,
+  category = ""
+): "HIGH" | "MEDIUM" | "LOW" {
+  const cat = category.toLowerCase();
+  const isPercentLike =
+    cat.includes("growth") || cat.includes("percent") || Math.abs(value) < 100;
+
+  if (isPercentLike) {
+    if (value >= 20) return "HIGH";
+    if (value >= 5) return "MEDIUM";
+    return "LOW";
+  }
+
+  const abs = Math.abs(value);
+  if (abs >= 1_000_000_000) return "HIGH";
+  if (abs >= 1_000_000) return "MEDIUM";
+  return "LOW";
+}
+
+export function processMoneyData(rawData?: RawMoneyDatum[]): MoneyVectorItem[] {
+  if (!rawData || rawData.length === 0) {
+    return [
+      {
+        category: "Federal Lobbying 2025",
+        value: 122373945,
+        signal: "HIGH",
+        description: "Total federal energy lobbying expenditure",
+      },
+      {
+        category: "Federal Awards 2025",
+        value: 1553145934,
+        signal: "HIGH",
+        description: "Federal awards to Indiana (DOE/EPA)",
+      },
+      {
+        category: "State Lobbying Growth",
+        value: 10.8,
+        signal: "HIGH",
+        description: "Year-over-year growth percentage",
+      },
+      {
+        category: "State Employers 2025",
+        value: 72,
+        signal: "MEDIUM",
+        description: "Number of employers engaged in lobbying",
+      },
+    ];
+  }
+
+  return rawData.map((r) => ({
+    category: r.category,
+    value: r.value,
+    signal: computeSignal(r.value, r.category),
+    description: r.description || "",
+  }));
 }
 
 /**
